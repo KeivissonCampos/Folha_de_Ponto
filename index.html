@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ponto</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Fundo cinza */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Altura total da tela */
+        }
+
+        .container {
+            width: 210mm; /* largura A4 */
+            height: auto; /* Permitir que a altura se ajuste ao conteúdo */
+            background-color: #ffffff; /* Fundo branco da folha */
+            padding: 20mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            position: relative; /* Para posicionar o botão */
+            margin: 0; /* Remove margens externas */
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 5mm 0; /* Espaçamento entre os elementos */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px; /* Menos espaço no topo */
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            position: absolute; /* Para posicionar o botão na parte inferior */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff; /* Cor do botão */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Cor do botão ao passar o mouse */
+        }
+
+        @media print {
+            body {
+                margin: 0; /* Remove margens ao imprimir */
+            }
+            button {
+                display: none; /* Esconde o botão na impressão */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="content">
+        <h1>Registro de Ponto</h1>
+        <h3>Nome do Funcionário: João da Silva</h3>
+        <h3>Empresa: Exemplo S.A.</h3>
+        <h2>Folha de Ponto Mensal</h2>
+
+        <table id="ponto-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>ENT1</th>
+                    <th>SAI1</th>
+                    <th>ENT2</th>
+                    <th>SAI2</th>
+                    <th>HORAS TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01/10/2024</td>
+                    <td>08:00</td>
+                    <td>12:00</td>
+                    <td>13:00</td>
+                    <td>17:00</td>
+                    <td>8:00</td>
+                </tr>
+                <tr>
+                    <td>02/10/2024</td>
+                    <td>08:15</td>
+                    <td>12:15</td>
+                    <td>13:15</td>
+                    <td>17:15</td>
+                    <td>8:00</td>
+                </tr>
+                <tr>
+                    <td>03/10/2024</td>
+                    <td>08:00</td>
+                    <td>12:00</td>
+                    <td>13:00</td>
+                    <td>16:30</td>
+                    <td>7:30</td>
+                </tr>
+                <tr>
+                    <td>04/10/2024</td>
+                    <td>08:00</td>
+                    <td>12:00</td>
+                    <td>13:00</td>
+                    <td>17:00</td>
+                    <td>8:00</td>
+                </tr>
+                <tr>
+                    <td>05/10/2024</td>
+                    <td>08:30</td>
+                    <td>12:30</td>
+                    <td>13:30</td>
+                    <td>17:30</td>
+                    <td>8:00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button id="download">Baixar PDF</button>
+    </div>
+
+    <script>
+        document.getElementById('download').addEventListener('click', function () {
+            const element = document.getElementById('content');
+            html2pdf()
+                .from(element)
+                .set({
+                    margin: 0,
+                    filename: 'registro_de_ponto.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 }, // Aumentar a escala para melhorar a qualidade
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                })
+                .save();
+        });
+    </script>
+
+</body>
+</html>
